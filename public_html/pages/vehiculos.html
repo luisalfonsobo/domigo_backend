@@ -1,0 +1,110 @@
+<div ng-controller="vehiculosController">
+
+    <nav class="top-nav red lighten-1">
+        <div class="container">
+            <div class="nav-wrapper"><a class="page-title">Vehiculos</a></div>
+        </div>
+    </nav>
+
+
+    <div id="contenido">
+
+        <h4>Lista de Vehiculos</h4>
+        
+        <div class="col-md-4">
+       
+            
+                <form onsubmit="javascript:return false;" id="form">
+                <div class="input-field">
+                    <i class="mdi-action-search prefix"></i>
+                    <input id="search" type="search" placeholder="" ng-model="searchKeyword" required>
+                    <label for="search">Buscador...</label>
+                  <i class="mdi-navigation-close"></i>
+                </div>
+              </form>
+            
+        </div>
+        <div class="col-md-12">
+            <div>
+                <table class="responsive-table striped bordered">
+                    <thead>
+                        <tr>
+                            <th data-field="id">Código</th>
+                            <th data-field="placa">Placa</th>
+                            <th data-field="color">Color</th>
+                            <th data-field="color">Acción</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr data-ng-repeat="estante in Vehiculos | filter: searchKeyword">
+                            <td>
+                                {{ estante.id}}
+                            </td>
+                            <td>
+                                {{ estante.placa}}
+                            </td>
+                            <td>
+                                {{ estante.color}}
+                            </td>
+                            
+                            <td>
+                                
+                                    <a data-ng-click="get(estante)" href="javascript:;"><i class="small mdi-action-launch"></i></a>
+                                    <!-- <a data-ng-click="get(product)" href="javascript:;">Ver</a> |
+                                    <a data-ng-click="edit(product)" href="javascript:;">Edit</a> -->
+
+                                
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div id="modal" class="modal modal-fixed-footer">
+            <div class="modal-content">
+                <h4>{{title}}</h4>
+                <div class="row">
+                    <form class="col s12">
+                        <div class="row">
+                            <div class="input-field col s6">
+                                <input ng-model="Vehiculo.id" disabled id="codigo" type="number" class="validate">
+                                <label class="{{active}}" for="codigo">Código</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="input-field col s6">
+                                <input ng-model="Vehiculo.placa" id="nombre" type="text" class="validate">
+                                <label class="{{active}}" for="nombre">Placa</label>
+                            </div>
+                            <div class="input-field col s6">
+                                <input ng-model="Vehiculo.color" id="ubicacion" type="text" class="validate">
+                                <label class="{{active}}" for="ubicacion">Color</label>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <a ng-click="cerrarModal()" href="" class="waves-effect waves-light btn red ">Salir</a>
+                <a data-ng-click="ejecutar()" class="waves-effect waves-light btn green "><i class="mdi-action-done-all right"></i>Guardar</a>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="fixed-action-btn" style="bottom: 45px; right: 24px;">
+        <a class="btn-floating btn-large green modal-trigger btn" data-ng-click="nuevo()" href="#modal">
+            <i class="large mdi-content-add"></i>
+        </a>
+    </div>
+
+</div>
+<script>
+
+    $(document).ready(function () {
+        // the "href" attribute of .modal-trigger must specify the modal ID that wants to be triggered
+        $('.modal-trigger').leanModal();
+    });
+
+</script>

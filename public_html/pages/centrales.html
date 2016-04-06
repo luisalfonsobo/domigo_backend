@@ -1,0 +1,142 @@
+<div ng-controller="proveedoresController">
+
+    <nav class="top-nav red lighten-1">
+        <div class="container">
+            <div class="nav-wrapper"><a class="page-title">Empresas de Mensajería</a></div>
+        </div>
+    </nav>
+
+
+    <div id="contenido">
+
+        <h4>Lista de Centrales</h4>
+        
+        <div class="col-md-4">
+       
+            
+                <form onsubmit="javascript:return false;" id="form">
+                <div class="input-field">
+                    <i class="mdi-action-search prefix"></i>
+                    <input id="search" type="search" placeholder="" ng-model="searchKeyword" required>
+                    <label for="search">Buscador...</label>
+                  <i class="mdi-navigation-close"></i>
+                </div>
+              </form>
+            
+        </div>
+        <div class="col-md-12">
+            <div>
+                <table class="responsive-table striped bordered">
+                    <thead>
+                        <tr>
+                            <th data-field="id">Código</th>
+                            <th data-field="nit">NIT</th>
+                            <th data-field="nombre">Nombre</th>
+                            <th data-field="direccion">Dirección</th>
+                            <th data-field="telefono">Teléfono</th>
+                            <th data-field="email">Email</th>
+                            <th>Estado</th>
+                            <th data-field="edicion">Activar Desactivar</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr data-ng-repeat="proveedor in Proveedores | filter: searchKeyword">
+                            <td>
+                                {{ proveedor.id}}
+                            </td>
+                            <td>
+                                {{ proveedor.nit }}
+                            </td>
+                            <td>
+                                {{ proveedor.nombre}}
+                            </td>
+                            <td>
+                                {{ proveedor.direccion}}
+                            </td>
+                            <td>
+                                {{ proveedor.telefono}}
+                            </td>
+                            <td>
+                                {{ proveedor.email}}
+                            </td>
+                            <td>
+                                <span ng-if="proveedor.estado == 'ACTIVO'" class="green white-text" style="padding: 3px;">{{proveedor.estado}}</span>
+                                <span ng-if="proveedor.estado == 'INACTIVO'" class="red white-text" style="padding: 3px;">{{proveedor.estado}}</span>
+                            </td>
+                            <td>
+                                <div ng-if="proveedor.estado === 'ACTIVO'">
+                                    <a ng-click="activar(proveedor)" style="float: left; margin-left: 3px;" href="javascript:;"  title="Bloquear"><i class="small mdi-action-lock-outline red-text"></i></a>
+                                </div>
+                                <div ng-if="proveedor.estado === 'INACTIVO'">
+                                    <a ng-click="activar(proveedor)"  style="float: left; margin-left: 3px;" href="javascript:;"  title="Habilitar"><i class="small mdi-action-lock-open"></i></a>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div id="modal" class="modal modal-fixed-footer">
+            <div class="modal-content">
+                <h4>{{title}}</h4>
+                <div class="row">
+                    <form class="col s12">
+                        <div class="row">
+                            <div class="input-field col s6">
+                                <input ng-model="Proveedor.id" disabled id="codigo" type="number" class="validate">
+                                <label class="{{active}}" for="codigo">Código</label>
+                            </div>
+                            <div class="input-field col s6">
+                                <input ng-model="Proveedor.nit" id="nit" type="text" class="validate">
+                                <label class="{{active}}" for="nombre">NIT</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="input-field col s6">
+                                <input ng-model="Proveedor.nombre" id="nombre" type="text" class="validate">
+                                <label class="{{active}}" for="nombre">Nombre</label>
+                            </div>
+                            <div class="input-field col s6">
+                                <input ng-model="Proveedor.direccion" id="direccion" type="text" class="validate">
+                                <label class="{{active}}" for="direccion">Dirección</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="input-field col s6">
+                                <input ng-model="Proveedor.telefono" id="telefono" type="text" class="validate">
+                                <label class="{{active}}" for="telefono">Teléfono</label>
+                            </div>
+                            <div class="input-field col s6">
+                                <input ng-model="Proveedor.email" id="email" type="email" class="validate">
+                                <label class="{{active}}" for="email">Email</label>
+                            </div>
+                        </div>
+                        
+                    </form>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <a ng-click="cerrarModal()" href="" class="waves-effect waves-light btn red ">Salir</a>
+                <a data-ng-click="ejecutar()" class="waves-effect waves-light btn green "><i class="mdi-action-done-all right"></i>Guardar</a>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="fixed-action-btn" style="bottom: 45px; right: 24px;">
+        <a class="btn-floating btn-large green modal-trigger btn" data-ng-click="nuevo()" href="#modal">
+            <i class="large mdi-content-add"></i>
+        </a>
+    </div>
+
+</div>
+<script>
+
+    $(document).ready(function () {
+        // the "href" attribute of .modal-trigger must specify the modal ID that wants to be triggered
+        $('.modal-trigger').leanModal();
+        $('select').material_select();
+    });
+
+</script>

@@ -1,0 +1,258 @@
+<div ng-controller="clientesController">
+
+    <nav class="top-nav red lighten-1">
+        <div class="container">
+            <div class="nav-wrapper"><a class="page-title">Clientes</a></div>
+        </div>
+    </nav>
+
+
+    <div id="contenido">
+
+        <h4>Lista de Clientes</h4>
+        
+        <div class="col-md-4">
+                <form onsubmit="javascript:return false;" id="form">
+                <div class="input-field">
+                    <i class="mdi-action-search prefix"></i>
+                    <input id="search" type="search" placeholder="" ng-model="searchKeyword" required>
+                    <label for="search">Buscador...</label>
+                  <i class="mdi-navigation-close"></i>
+                </div>
+              </form>
+            
+        </div>
+        <div class="col s12">
+            <div>
+                <table class="responsive-table striped bordered">
+                    <thead>
+                        <tr>
+                            <th data-field="codigo">Cédula</th>
+                            <th data-field="nombre">Nombre</th>
+                            <th data-field="telefono">Teléfono</th>
+                            <th data-field="direccion">Dirección</th>
+                            <th data-field="edicion"><center>Editar/Movimientos</center></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr data-ng-repeat="persona in Personas | filter: searchKeyword">
+                            <td>
+                                {{ persona.cedula}}
+                            </td>
+                            <td>
+                                {{ persona.nombres}} {{ persona.apellidos}}
+                            </td>
+                            <td>
+                                {{ persona.telefono}}
+                            </td>
+                            <td>
+                                {{ persona.direccion}}
+                            </td>
+                            <td>
+                                <center>
+                                <a data-ng-click="get(persona)" href="javascript:;"><i class="small mdi-action-launch"></i></a>
+                                <a data-ng-click="movimientos(persona)" href="javascript:;"><i class="small mdi-action-assignment"></i></a> 
+                                </center>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <!--<dir-pagination-controls boundary-links="true" template-url="dirPagination.tpl.html"></dir-pagination-controls>-->
+            </div>
+        </div>
+
+        <div id="modal" class="modal modal-fixed-footer">
+            <div class="modal-content">
+                <h4>{{title}}</h4>
+                <div class="row">
+                    <form class="col s12">
+                        <div class="row">
+                            <div class="input-field col s6">
+                                <input ng-model="Persona.id" disabled id="codigo" type="number" class="validate">
+                                <label class="{{active}}" for="codigo">Código</label>
+                            </div>
+                            <div class="input-field col s6">
+                                <input ng-model="Persona.cedula" id="cedula" type="text" class="validate">
+                                <label class="{{active}}" for="cedula">Cédula</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="input-field col s6">
+                                <input ng-model="Persona.nombres" id="nombres" type="text" class="validate">
+                                <label class="{{active}}" for="nombres">Nombres</label>
+                            </div>
+                            <div class="input-field col s6">
+                                <input ng-model="Persona.apellidos" id="apellidos" type="text" class="validate">
+                                <label class="{{active}}" for="apellidos">Apellidos</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="input-field col s2">
+                                <label>Sexo</label>
+                            </div>
+                            <div class="input-field col s4">
+                                <select ng-model="Persona.sexo" class="browser-default">
+                                    <option value="M" selected>Masculino</option>
+                                    <option value="F" >Femenino</option>
+                                </select>
+                            </div>
+                            
+                            <div class="input-field col s6">
+                                <input ng-model="Persona.telefono" id="telefono" type="text" class="validate">
+                                <label class="{{active}}" for="telefono">Teléfono</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="input-field col s6">
+                                <input ng-model="Persona.direccion" id="direccion" type="text" class="validate">
+                                <label class="{{active}}" for="direccion">Dirección</label>
+                            </div>
+                            <div class="input-field col s6">
+                                <input ng-model="Persona.email" id="email" type="email" class="validate">
+                                <label class="{{active}}" for="email">Correo</label>
+                            </div>
+                        </div>
+                            
+                            
+                        
+                    </form>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <a ng-click="cerrarModal()" href="" class="waves-effect waves-light btn red ">Salir</a>
+                <a data-ng-click="ejecutar()" class="waves-effect waves-light btn green "><i class="mdi-action-done-all right"></i>Guardar</a>
+            </div>
+        </div>
+
+    </div>
+    
+    <div id="modalMovimientos" class="modal modal-fixed-footer">
+            <div class="modal-content">
+                <h4>Movimientos del Cliente</h4>
+                <p><b>Nombre: </b>{{Persona.nombres}} {{Persona.apellidos}}</p>
+                <p><b>Cédula: </b>{{Persona.cedula}}</p>
+                <div class="col-md-12">
+            <div>
+                <table class="responsive-table striped bordered">
+                    <thead>
+                        <tr>
+                            <th>Nº</th>
+                            <th data-field="codigo">Código</th>
+                            <th data-field="nombre">Fecha</th>
+                            <th data-field="telefono">Estado</th>
+                            <th data-field="edicion"><center>Ver</center></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr data-ng-repeat="factura in Facturas">
+                            <td>
+                                {{ $index + 1}}
+                            </td>
+                            <td>
+                                {{ factura.id }}
+                            </td>
+                            <td>
+                                {{ factura.fecha}}
+                            </td>
+                            <td>
+                                {{ factura.estado}}
+                            </td>
+                            <td>
+                                <center>
+                                <a data-ng-click="getDetalles(factura)" href="javascript:;"><i class="small mdi-action-launch"></i></a>
+                                </center>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <!--<dir-pagination-controls boundary-links="true" template-url="dirPagination.tpl.html"></dir-pagination-controls>-->
+            </div>
+        </div>
+            </div>
+        
+            
+        
+            <div class="modal-footer">
+                <a ng-click="cerrarModalMovimientos()" href="" class="waves-effect waves-light btn red ">Salir</a>
+            </div>
+    </div>
+    
+    <div id="modalDetalles" class="modal modal-fixed-footer">
+            <div class="modal-content">
+                <h4>Detalles de la Factura</h4>
+                <p><b>Nombre: </b>{{Persona.nombres}} {{Persona.apellidos}}</p>
+                <p><b>Cédula: </b>{{Persona.cedula}}</p>
+                <p><b>Código de Factura: </b>{{Factura.id}}</p>
+                <p><b>Fecha: </b>{{Factura.fecha}}</p>
+                <p><b>Estado: </b>{{Factura.estado}}</p>
+                <p><b>Total: </b>{{Factura.total}}</p>
+                <div ng-if="Factura.estado == 'cerrada' || Factura.estado == 'abierta'">
+                    <p><a ng-click="devolverFactura(Factura)" href="" class="waves-effect waves-light btn red ">Anular Factura</a></p>
+                </div>
+                <div class="col-md-12">
+            <div>
+                <table class="responsive-table striped bordered">
+                    <thead>
+                        <tr>
+                            <th>Nº</th>
+                            <th data-field="produco">Producto</th>
+                            <th data-field="cantidad">Cantidad</th>
+                            <th data-field="precio">Precio</th>
+                            <th data-field="subtotal">Subtotal</th>
+                            <th><div ng-if="Factura.estado == 'cerrada' || Factura.estado == 'abierta'">Devolver</div></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr data-ng-repeat="detalle in Detalles">
+                            <td>
+                                {{ $index +1 }}
+                            </td>
+                            <td>
+                                {{ detalle.descripcion }}
+                            </td>
+                            <td>
+                                {{ detalle.cantidad}}
+                            </td>
+                            <td>
+                                {{ detalle.precio}}
+                            </td>
+                            <td>
+                                {{ detalle.precio * detalle.cantidad}}
+                            </td>
+                            <td>
+                                <div ng-if="Factura.estado == 'cerrada' || Factura.estado == 'abierta'">
+                                    <a data-ng-click="devolver(detalle)" href="javascript:;"><i class="small mdi-action-delete red-text"></i></a>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <!--<dir-pagination-controls boundary-links="true" template-url="dirPagination.tpl.html"></dir-pagination-controls>-->
+            </div>
+        </div>
+            </div>
+        
+            
+        
+            <div class="modal-footer">
+                <a ng-click="cerrarModalDetalles()" href="" class="waves-effect waves-light btn red ">Salir</a>
+            </div>
+    </div>
+
+
+    <div class="fixed-action-btn" style="bottom: 45px; right: 24px;">
+        <a class="btn-floating btn-large green modal-trigger btn" data-ng-click="nuevo()" href="#modal">
+            <i class="large mdi-content-add"></i>
+        </a>
+    </div>
+
+</div>
+<script>
+
+    $(document).ready(function () {
+        // the "href" attribute of .modal-trigger must specify the modal ID that wants to be triggered
+        $('.modal-trigger').leanModal();
+        $('select').material_select();
+    });
+
+</script>

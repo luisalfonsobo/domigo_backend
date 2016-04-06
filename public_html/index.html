@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html ng-app="buscame">
+    <head>
+        <title>TuDomicilioApp</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="css/materialize.min.css" rel="stylesheet" type="text/css"/>
+        <link href="css/style.css" rel="stylesheet" type="text/css"/>
+        <script src="js/libs/jquery/jquery.js" type="text/javascript"></script>
+        <script src="js/libs/angular.js/angular.js" type="text/javascript"></script>
+        <script src="js/libs/angular.js/angular-route.js" type="text/javascript"></script>
+        <script src="js/libs/angular.js/ui-utils.min.js" type="text/javascript"></script>
+        <script src="js/libs/angular.js/dirPagination.js" type="text/javascript"></script>
+        <script src="js/libs/datetime.js" type="text/javascript"></script>
+        <script src="js/libs/materialize.js" type="text/javascript"></script>
+        
+        <script src="js/libs/jquery.PrintArea.js" type="text/javascript"></script>
+        
+        <script src="js/scripts/app.js" type="text/javascript"></script>
+        <script src="js/scripts/controllers/sessionController.js" type="text/javascript"></script>
+        <script src="js/scripts/controllers/productosController.js" type="text/javascript"></script>
+        <script src="js/scripts/controllers/vehiculosController.js" type="text/javascript"></script>
+        <script src="js/scripts/controllers/clientesController.js" type="text/javascript"></script>
+        <script src="js/scripts/controllers/vendedoresController.js" type="text/javascript"></script>
+        <script src="js/scripts/controllers/proveedoresController.js" type="text/javascript"></script>
+        <script src="js/scripts/controllers/facturasController.js" type="text/javascript"></script>
+        <script src="js/scripts/controllers/comprasController.js" type="text/javascript"></script>
+        <script src="js/scripts/controllers/configuracionController.js" type="text/javascript"></script>
+        <script src="js/scripts/controllers/mensajerosController.js" type="text/javascript"></script>
+        <script src="js/scripts/services/productoService.js" type="text/javascript"></script>
+        <script src="js/scripts/services/vehiculoService.js" type="text/javascript"></script>
+        <script src="js/scripts/services/personaService.js" type="text/javascript"></script>
+        <script src="js/scripts/services/proveedorService.js" type="text/javascript"></script>
+        <script src="js/scripts/services/facturaService.js" type="text/javascript"></script>
+        <script src="js/scripts/services/compraService.js" type="text/javascript"></script>
+        <script src="js/scripts/services/claveService.js" type="text/javascript"></script>
+        <script src="js/scripts/services/devolucionFacturaService.js" type="text/javascript"></script>
+        <script src="js/scripts/services/devolucionCompraService.js" type="text/javascript"></script>
+        <script src="js/scripts/services/devolucionDetalleCompraService.js" type="text/javascript"></script>
+        <script src="js/scripts/services/devolucionDetalleFacturaService.js" type="text/javascript"></script>
+    </head>
+    <body>
+        
+        <header>
+            <div ng-controller="sessionController">
+            <ul id="slide-out" class="side-nav fixed grey lighten-3" style="overflow:auto;">
+                    <li class="logo" style="height: 80px; margin-top:20px; margin-bottom:40px; padding-bottom:20px;">
+                        <a id="logo-container" href="#!" class="brand-logo" >
+                            <center style="width: 100%">
+                                <!--<img src="image/tucarro.png" width="100%" alt="" />-->
+                                <h5>DOMIGO</h5>
+                            </center>
+                        </a>
+                        <div class="divider"></div>
+                    </li>  
+                    <li><a ng-show="admin" href="#/centrales"><i class="small mdi-action-shopping-cart" style="padding-right: 15px;"></i>Centrales</a></li>
+                    <li><a ng-show="admin" href="#/empresas"><i class="small mdi-editor-attach-money" style="padding-right: 15px;"></i>Empresas(x)</a></li>
+                    <li><a ng-show="admin" href="javascript:;"><i class="small mdi-action-assignment" style="padding-right: 15px;"></i>Categorías(x)</a></li>
+                    <li><a ng-show="admin" href="#/tiposervicio"><i class="small mdi-action-settings" style="padding-right: 15px;"></i>Servicios</a></li>
+                    <li><a ng-show="admin" href="javascript:;"><i class="small mdi-action-settings" style="padding-right: 15px;"></i>Clientes(x)</a></li>
+                    <li><a ng-show="sitio" href="javascript:;"><i class="small mdi-action-account-circle" style="padding-right: 15px;"></i>Categorías</a></li>
+                    <li><a ng-show="sitio" href="javascript:;"><i class="small mdi-action-assignment-ind" style="padding-right: 15px;"></i>Productos</a></li>
+                    <li><a ng-show="empresa" href="#/mensajeros"><i class="small mdi-editor-attach-money" style="padding-right: 15px;"></i>Mensajeros</a></li>
+                    <li><a ng-show="empresa" href="#/vehiculos"><i class="small mdi-editor-attach-money" style="padding-right: 15px;"></i>Vehiculos</a></li>
+                    <li  id="tabSalir"><a onclick="salir()" href="#!"><i class="small mdi-action-settings-power" style="padding-right: 15px;"></i>Salir</a></li>
+                </ul>
+                
+           </div>
+        </header>
+        
+        <!-- Modal Structure -->
+        <div id="modalMessaje" class="modal">
+          <div class="modal-content">
+              <h4 id="title-modal"></h4>
+              <p id="message-modal"></p>
+          </div>
+          <div class="modal-footer">
+            <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Aceptar</a>
+          </div>
+        </div>
+        <div id="container" style="height: 100%;" >
+            <div ng-view>
+                
+                
+                
+            </div>
+        </div>
+        
+        <script>
+            $(document).ready(function(){
+                
+                if(session.getUsuario() == null ){
+                    location.href= "login.html";
+                }
+                
+            });
+            
+            function salir(){
+                session.cerrarSesion();
+            }
+            
+        </script>
+        
+    </body>
+</html>

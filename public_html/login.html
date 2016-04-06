@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html ng-app="buscame">
+    <head>
+        <title>TuDomicilio</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="css/materialize.min.css" rel="stylesheet" type="text/css"/>
+        <link href="css/style.css" rel="stylesheet" type="text/css"/>
+        <script src="js/libs/jquery/jquery.js" type="text/javascript"></script>
+        <script src="js/libs/angular.js/angular.js" type="text/javascript"></script>
+        <script src="js/libs/angular.js/angular-route.js" type="text/javascript"></script>
+        <script src="js/libs/angular.js/ui-utils.min.js" type="text/javascript"></script>
+        <script src="js/libs/angular.js/dirPagination.js" type="text/javascript"></script>
+        <script src="js/libs/materialize.js" type="text/javascript"></script>
+        <script src="js/scripts/app.js" type="text/javascript"></script>
+        <script src="js/scripts/controllers/loginController.js" type="text/javascript"></script>
+        <script src="js/scripts/services/personaService.js" type="text/javascript"></script>
+    </head>
+    <body>
+        
+        <div class="row" ng-controller="loginController">
+            <div class="col s3"><p></p></div>
+            <form class="col s6" onsubmit="javascript:return false;">
+              <div class="row">
+                <div class="input-field col s12">
+                    <center style="width: 100%"><h1>TuDomicilio</h1></center>
+                </div>
+                <div class="input-field col s12">
+                    <input id="user" ng-model="Usuario.usuario" type="text" class="validate">
+                  <label for="user">Usuario</label>
+                </div>
+                <div class="input-field col s12">
+                    <input id="pass" ng-model="Usuario.clave" type="password" class="validate">
+                  <label for="pass">Contraseña</label>
+                </div>
+                  
+                  <div class="input-field col s12">
+                    <button class="btn waves-effect waves-light" type="submit" ng-click="iniciarSesion()" name="action">Iniciar Sesión
+                        <i class="mdi-content-send right"></i>
+                    </button>
+                </div>
+              </div>
+              
+            </form>
+          </div>
+        
+       
+    </body>
+</html>

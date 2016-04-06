@@ -1,0 +1,164 @@
+<div ng-controller="productosController">
+
+    <nav class="top-nav red lighten-1">
+        <div class="container">
+            <div class="nav-wrapper"><a class="page-title">Servicios</a></div>
+        </div>
+    </nav>
+
+
+    <div id="contenido">
+
+        <h4>Lista de Servicios</h4>
+        
+        <div class="col-md-4">
+       
+            
+                <form onsubmit="javascript:return false;" id="form">
+                <div class="input-field">
+                    <i class="mdi-action-search prefix"></i>
+                    <input id="search" type="search" placeholder="" ng-keyup="convertCaracter()" ng-model="searchKeyword" required>
+                    <label for="search">Buscador...</label>
+                  <i class="mdi-navigation-close"></i>
+                </div>
+              </form>
+            
+        </div>
+        <div class="col-md-12">
+            <div id="tableInventario">
+                <table  class="responsive-table striped bordered">
+                    <thead>
+                        <tr>
+                            <th data-field="id">Código</th>
+                            <th data-field="nombre">Nombre</th>
+                            <th data-field="descripcion">Descripción</th>
+                            <th data-field="precio">Precio</th>
+                            <th data-field="precio">Estado</th>
+                            <th data-field="edicion">Editar</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr data-ng-repeat="product in Products | orderBy:'nombre'  | filter: searchKeyword ">
+
+                            <td>
+                                {{ product.id}}
+                            </td>
+                            <td>
+                                {{ product.nombre}}
+                            </td>
+                            <td>
+                                {{ product.descripcion}}
+                            </td>
+                            <td>
+                                {{ product.valor | currency}}
+                            </td>
+                            <td>
+                                {{ product.estado}}
+                            </td>
+                            <td>
+                                
+                                <a ng-hide="ocultar" data-ng-click="get(product)" href="javascript:;"><i class="small mdi-editor-mode-edit"></i></a>
+                                    
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- MODAL AGREGAR Y MODIFICAR PRODUCTO -->
+        <div id="modal" class="modal modal-fixed-footer">
+            <div class="modal-content">
+                <h4>{{title}}</h4>
+                <div class="row">
+                    <form class="col s12">
+                        <div class="row">
+                            <div class="input-field col s6">
+                                <input ng-model="Product.id" disabled id="codigo" type="text" class="validate">
+                                <label class="{{active}}" for="codigo">Código</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="input-field col s6">
+                                <input ng-model="Product.nombre" id="nombre" type="text" class="validate">
+                                <label class="{{active}}" for="referencia">Nombre</label>
+                            </div>
+                            <div class="input-field col s6">
+                                <input ng-model="Product.descripcion" id="descripcion" type="text" class="validate">
+                                <label class="{{active}}" for="descripcion">Descripción</label>
+                            </div>
+                            
+                        </div>
+                        <div class="row">
+                            <div class="input-field col s6">
+                                <input ng-model="Product.valor" id="precio" type="number" class="validate">
+                                <label class="{{active}}" for="precio">Precio</label>
+                            </div>
+                            
+                            
+                        </div>
+                        <div class="row">
+                            <div class="input-field col s2">
+                            <label>Estado</label>
+                            </div>
+                            <div class="input-field col s7">
+                            <select ng-model="Product.estado" class="browser-default">
+                                    <option value="ACTIVO">ACTIVO</option>
+                                    <option value="INACTIVO">INACTIVO</option>
+                                  </select>
+                                
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <a ng-click="cerrarModal()" href="" class="waves-effect waves-light btn red ">Salir</a>
+                <a data-ng-click="ejecutar()" class="waves-effect waves-light btn green "><i class="mdi-action-done-all right"></i>Guardar</a>
+            </div>
+        </div>
+        
+        
+
+    </div>
+
+    <div ng-hide="ocultar" class="fixed-action-btn" style="bottom: 45px; right: 24px;">
+        <a class="btn-floating btn-large green modal-trigger btn" data-ng-click="nuevo()" href="#modal">
+            <i class="large mdi-content-add"></i>
+        </a>
+    </div>
+    <div ng-hide="ocultar" class="fixed-action-btn" style="bottom: 45px; right: 90px;">
+        <a class="btn-floating btn-large red modal-trigger btn" href="#modalInformes">
+            <i class="large mdi-action-assessment"></i>
+        </a>
+    </div>
+
+</div>
+<script>
+
+    $(document).ready(function () {
+        // the "href" attribute of .modal-trigger must specify the modal ID that wants to be triggered
+        $('.modal-trigger').leanModal();
+        $('select').material_select();
+        $('.datepicker').pickadate({
+            selectMonths: true, // Creates a dropdown to control month
+            selectYears: 15 // Creates a dropdown of 15 years to control year
+        });
+    });
+    
+    function imprimirInventario(){
+        
+        var ficha=document.getElementById('tableInventario');
+        var ventimp=window.open(' ','popimpr');
+        
+        var html = "<center><h4>LujoRepuestos TuCarro.com</h4><center>";
+        html += "<center><h4>Informe de Inventario Actual</h4><center>";
+        html +=ficha.innerHTML;
+        ventimp.document.write(html);
+        ventimp.document.close();
+        ventimp.print();
+        ventimp.close();
+        
+    }
+
+</script>

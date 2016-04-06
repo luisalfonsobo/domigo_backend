@@ -1,0 +1,99 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 12-jun-2015, 18:56:26
+    Author     : josekrlos
+*/
+
+#slide-out li{
+    
+    margin-left: 15px; 
+    
+}
+
+//label focus color 
+.input-field input[type=text]:focus + label {
+  color: #ee6e73;
+}
+ //label underline focus color 
+.input-field input[type=text]:focus {
+  border-bottom: 1px solid #ee6e73;
+  box-shadow: 0 1px 0 0 #ee6e73;
+}
+
+.input-field input[type=number]:focus + label {
+  color: #ee6e73;
+}
+ //label underline focus color 
+.input-field input[type=number]:focus {
+  border-bottom: 1px solid #ee6e73;
+  box-shadow: 0 1px 0 0 #ee6e73;
+}
+
+
+.container {
+  width: 100%;
+}
+
+td{
+    padding: 1px;
+}
+
+#contenido{
+    margin: 15px;
+}
+
+nav.top-nav {
+  height: 90px;
+  box-shadow: none; 
+}
+
+nav.top-nav a.page-title {
+    line-height: 90px;
+    font-size: 37px; 
+    color: white;
+}
+
+ul.side-nav.fixed {
+  overflow: auto;
+
+  li {
+    line-height: 44px;
+    
+    &:hover, &.active {
+      background-color: rgba(0,0,0,.05);
+    }
+
+    a {
+      font-size: 13px;
+      line-height: 44px;
+      height: 44px;
+    }
+  }
+
+  ul.collapsible-accordion {
+    background-color: #FFF;
+  }
+
+  // Only show scrollbar on hover
+  &:hover {
+    overflow-y: auto;
+  }
+}
+
+  
+  #container, header{
+        padding-left: 240px;
+    }
+
+    button{
+        margin: 6px;
+    }
+
+    
+    .pagination li.active{
+        background-color: #ef5350;
+    }

@@ -1,0 +1,265 @@
+<div ng-controller="mensajerosController">
+
+    <nav class="top-nav red lighten-1">
+        <div class="container">
+            <div class="nav-wrapper"><a class="page-title">Mensajeros</a></div>
+        </div>
+    </nav>
+
+
+    <div id="contenido">
+
+        <h4>Lista de Mensajeros</h4>
+
+        <div class="col-md-4">
+            <form onsubmit="javascript:return false;" id="form">
+                <div class="input-field">
+                    <i class="mdi-action-search prefix"></i>
+                    <input id="search" type="search" placeholder="" ng-model="searchKeyword" required>
+                    <label for="search">Buscador...</label>
+                    <i class="mdi-navigation-close"></i>
+                </div>
+            </form>
+
+        </div>
+        <div class="col s12">
+            <div>
+                <table class="responsive-table striped bordered">
+                    <thead>
+                        <tr>
+                            <th data-field="codigo">Cédula</th>
+                            <th data-field="nombre">Nombre</th>
+                            <th data-field="telefono">Teléfono</th>
+                            <th data-field="direccion">Dirección</th>
+                            <th data-field="direccion">Vehiculo</th>
+                            <th data-field="edicion"><center>Movimientos</center></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                        <tr data-ng-repeat="persona in Personas| filter: searchKeyword">
+                            <td>
+                                {{ persona.cedula}}
+                            </td>
+                            <td>
+                                {{ persona.nombres}} {{ persona.apellidos}}
+                            </td>
+                            <td>
+                                {{ persona.telefono}}
+                            </td>
+                            <td>
+                                {{ persona.direccion}}
+                            </td>
+                            <td>
+                                <a href="javascript:;" ng-click="asignar(persona)" ng-if="persona.placa == null || persona.placa == ''">Sin Asignar</a>
+                                <a href="javascript:;" ng-click="asignar(persona)" ng-if="persona.placa != null || persona.placa != ''">{{ persona.placa}}</a>
+                            </td>
+                            <td>
+                    <center>
+                        <!--<a data-ng-click="get(persona)" href="javascript:;"><i class="small mdi-action-launch"></i></a>-->
+                        <a data-ng-click="movimientos(persona)" href="javascript:;"><i class="small mdi-action-assignment"></i></a> 
+                    </center>
+                    </td>
+                    </tr>
+                    </tbody>
+                </table>
+                <!--<dir-pagination-controls boundary-links="true" template-url="dirPagination.tpl.html"></dir-pagination-controls>-->
+            </div>
+        </div>
+
+        <div id="modal" class="modal modal-fixed-footer">
+            <div class="modal-content">
+                <h4>{{title}}</h4>
+                <div class="row">
+                    <form class="col s12">
+                        <div class="row">
+                            <div class="input-field col s6">
+                                <input ng-model="Persona.id" disabled id="codigo" type="number" class="validate">
+                                <label class="{{active}}" for="codigo">Código</label>
+                            </div>
+                            <div class="input-field col s6">
+                                <input ng-model="Persona.cedula" id="cedula" type="text" class="validate">
+                                <label class="{{active}}" for="cedula">Cédula</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="input-field col s6">
+                                <input ng-model="Persona.nombres" id="nombres" type="text" class="validate">
+                                <label class="{{active}}" for="nombres">Nombres</label>
+                            </div>
+                            <div class="input-field col s6">
+                                <input ng-model="Persona.apellidos" id="apellidos" type="text" class="validate">
+                                <label class="{{active}}" for="apellidos">Apellidos</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="input-field col s2">
+                                <label>Sexo</label>
+                            </div>
+                            <div class="input-field col s4">
+                                <select ng-model="Persona.sexo" class="browser-default">
+                                    <option value="M" selected>Masculino</option>
+                                    <option value="F" >Femenino</option>
+                                </select>
+                            </div>
+
+                            <div class="input-field col s6">
+                                <input ng-model="Persona.telefono" id="telefono" type="text" class="validate">
+                                <label class="{{active}}" for="telefono">Teléfono</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="input-field col s6">
+                                <input ng-model="Persona.direccion" id="direccion" type="text" class="validate">
+                                <label class="{{active}}" for="direccion">Dirección</label>
+                            </div>
+                            <div class="input-field col s6">
+                                <input ng-model="Persona.email" id="email" type="email" class="validate">
+                                <label class="{{active}}" for="email">Correo</label>
+                            </div>
+                        </div>
+
+
+
+                    </form>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <a ng-click="cerrarModal()" href="" class="waves-effect waves-light btn red ">Salir</a>
+                <a data-ng-click="ejecutar()" class="waves-effect waves-light btn green "><i class="mdi-action-done-all right"></i>Guardar</a>
+            </div>
+        </div>
+
+
+        <div id="modalAgregar" class="modal modal-fixed-footer">
+            <div class="modal-content">
+                <h4>Traer Mensajero</h4>
+                <div class="row">
+                    <form class="col s12">
+                        <div class="row">
+
+                            <div class="input-field col s6">
+                                <input ng-model="Mensajero.cedula" id="cedula" type="text" class="validate">
+                                <label class="{{active}}" for="cedula">Cédula</label>
+                            </div>
+
+                            <div class="col s3">
+                                <a data-ng-click="buscarMensajero()" class="waves-effect waves-light btn green "><i class="mdi-action-done-all right"></i>Buscar</a>
+                            </div>
+                        </div>
+
+                        <div class="row">
+
+                            <ul class="collection">
+                                <li class="collection-item">Nombres: {{Mensajero.nombres}}</li>
+                                <li class="collection-item">Apellidos: {{Mensajero.apellidos}}</li>
+                                <li class="collection-item">Cedula:  {{Mensajero.cedula}}</li>
+                                <li class="collection-item">Direccion: {{Mensajero.direccion}}</li>
+                                <li class="collection-item">Telefono: {{Mensajero.telefono}}</li>
+                                <li class="collection-item">Email: {{Mensajero.email}}</li>
+                            </ul>
+
+                        </div>
+
+
+
+                    </form>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <a ng-click="cerrarModalAgregar()" href="" class="waves-effect waves-light btn red ">Salir</a>
+                <a data-ng-click="addMensajero()" class="waves-effect waves-light btn green "><i class="mdi-action-done-all right"></i>Guardar</a>
+            </div>
+        </div>
+
+
+        <div id="modalAsignar" class="modal modal-fixed-footer">
+            <div class="modal-content">
+                <h4>Asignar Vehiculo</h4>
+                <div class="row">
+                    <form class="col s12">
+                        <div class="row">
+                            <h6>Asignar Vehiculo a:</h6>
+                        </div>
+
+                        <div class="row">
+
+                            <ul class="collection">
+                                <li class="collection-item">Nombres: {{Mensajero.nombres}} {{Mensajero.apellidos}}</li>
+                                <li class="collection-item">Cedula:  {{Mensajero.cedula}}</li>
+                            </ul>
+
+                        </div>
+
+                        <h4>Lista de Vehiculos</h4>
+
+                        <div class="col-md-4">
+
+
+                            <form onsubmit="javascript:return false;" id="form">
+                                <div class="input-field">
+                                    <i class="mdi-action-search prefix"></i>
+                                    <input id="search" type="search" placeholder="" ng-model="searchKeyword" required>
+                                    <label for="search">Buscador...</label>
+                                    <i class="mdi-navigation-close"></i>
+                                </div>
+                            </form>
+
+                        </div>
+                        <div class="col-md-12">
+                            <div>
+                                <table class="responsive-table striped bordered">
+                                    <thead>
+                                        <tr>
+                                            <th data-field="id">Código</th>
+                                            <th data-field="placa">Placa</th>
+                                            <th data-field="color">Color</th>
+                                            <th>Escoger</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr data-ng-repeat="estante in Vehiculos| filter: searchKeyword">
+                                            <td>
+                                                {{ estante.id}}
+                                            </td>
+                                            <td>
+                                                {{ estante.placa}}
+                                            </td>
+                                            <td>
+                                                {{ estante.color}}
+                                            </td>
+                                            <td>
+                                                <a data-ng-click="escoger(estante)" href="javascript:;"><i class="small mdi-action-launch"></i></a>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <a ng-click="cerrarModalAsignar()" href="" class="waves-effect waves-light btn red ">Salir</a>
+            </div>
+        </div>
+
+    </div>
+
+
+
+    <div class="fixed-action-btn" style="bottom: 45px; right: 24px;">
+        <a class="btn-floating btn-large green modal-trigger btn" href="#modalAgregar">
+            <i class="large mdi-content-add"></i>
+        </a>
+    </div>
+
+</div>
+<script>
+
+    $(document).ready(function () {
+        // the "href" attribute of .modal-trigger must specify the modal ID that wants to be triggered
+        $('.modal-trigger').leanModal();
+        $('select').material_select();
+    });
+
+</script>
